@@ -113,15 +113,50 @@ const icons = [
 	}
 ];
 
-let container = document.getElementById('container');
+let container = document.getElementById('row');
 
-icons.forEach((element)=> {
-let className = element.family + ' '+ element.prefix + element.name;
-container.innerHTML += `
-<div class="container-fluid">
-<div class="col-3 col-sm-6 col-lg-4 mt-4 col-xxl-3">
-    <i class="${className}"></i>
-    <h3 class="name">${element.name}</h3>
+
+function createCard(arrayData, classIcon) {
+	container.innerHTML += `
+<div class="col-3 col-sm-2 col-lg-2 mt-2 col-xxl-2 text-center p-3 bg-light m-4">
+    <i class="${arrayData.color} ${classIcon}"></i>
+    <p class="name mb-0">${arrayData.name}</p>
 </div>
-</div>`
+`
+}
+
+icons.forEach((element) => {
+	let className = element.family + ' ' + element.prefix + element.name;
+	createCard(element, className);
 })
+
+
+let selectType = document.getElementById('types');
+
+
+function showSelectedType(valueType){
+	container.innerHTML = '';
+	const arrayToshow = icons.filter( function(icon) {
+		if(valueType === 'all'){
+			return true;
+		}
+		return valueType === icon.type
+	})
+	console.log(arrayToshow);
+	arrayToshow.forEach((element) => {
+		let className = element.family + ' ' + element.prefix + element.name;
+		createCard(element, className);
+	})
+}
+
+
+
+function getComboA(selectObject) {
+	var value = selectObject.value; 
+	console.log(value); 
+	showSelectedType(value);
+  }
+
+
+
+
